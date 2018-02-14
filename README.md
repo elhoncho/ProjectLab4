@@ -33,7 +33,7 @@
 
 7.Clone Repo
 
-    git clone 
+    git clone https://github.com/elhoncho/ProjectLab4.git
 
 8.In eclipse file->open new project from file system
 
