@@ -33,7 +33,7 @@
 .cproject
 .project
 .settings/
-.Debug/
+Debug/
 
 #STM32 files
 .mxproject
