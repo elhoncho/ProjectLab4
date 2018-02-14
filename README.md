@@ -6,7 +6,15 @@
     
 2.Install openstm32 IDE
 
+    Windows:
     http://www.ac6-tools.com/downloads/SW4STM32/install_sw4stm32_win_64bits-latest.exe
+    
+    Mac:
+    http://www.ac6-tools.com/downloads/SW4STM32/install_sw4stm32_macos_64bits-latest.run
+        Set to executable 
+            chmod 777 install_sw4stm32_macos_64bits-latest.run
+        then run
+            ./install_sw4stm32_macos_64bits-latest.run
 
 3.Install cubemx eclipse plugin
 
