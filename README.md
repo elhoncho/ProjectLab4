@@ -1,6 +1,6 @@
 # ProjectLab4
 
-1. Setup Instructions to run Flight Controller
+1.Setup Instructions to run Flight Controller
 
     This code was developed using OpenSTM32 and CubeMX
     
