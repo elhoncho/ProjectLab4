@@ -1,7 +1,8 @@
 # ProjectLab4
 
 1.Setup Instructions to run Flight Controller
-    *This code was developed using OpenSTM32 and CubeMX 
+    *This code was developed using OpenSTM32 and CubeMX
+    
 2.Install openstm32 IDE
   *http://www.ac6-tools.com/downloads/SW4STM32/install_sw4stm32_win_64bits-latest.exe
 3.Install cubemx eclipse plugin
