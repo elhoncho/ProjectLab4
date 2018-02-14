@@ -34,6 +34,5 @@
 .project
 .settings/
 
-# Include makefiles
-!Makefile
-*~
+#STM32 files
+.mxproject
