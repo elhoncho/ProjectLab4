@@ -16,17 +16,21 @@
 4.Open the cubemx perspective in Eclipse
 
 5.Install f4 plugin 
-  *(4.5.2 of UM1718)
+
+    (4.5.2 of UM1718)
 
 6.Install git
-  *Not necessary if ruing Linux or Mac
+
+    Not necessary if ruing Linux or Mac
 
 7.Clone Repo
-  *git clone 
+
+    git clone 
 
 8.In eclipse file->open new project from file system
 
 9.Build the project
 
 10.Debug button -> debug configuration
-  *select Ac6 STM32
+
+    select Ac6 STM32
