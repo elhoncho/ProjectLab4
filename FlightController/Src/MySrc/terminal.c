@@ -11,8 +11,10 @@
 
 #include<stdint.h>
 #include<string.h>
+#include<stdlib.h>
 #include "MyInc\terminal.h"
 #include "MyInc\terminalHAL.h"
+#include "MyInc\AT86RF212B.h"
 
 uint8_t volatile newCmd = 0;
 uint8_t debug = 0;
@@ -26,14 +28,26 @@ struct commandStruct{
 static void CmdClear(char *arg1, char *arg2);
 static void ListCommands(char *arg1, char *arg2);
 static void ToggelDebug(char *arg1, char *arg2);
+static void ReadRegister(char *arg1, char *arg2);
+static void WriteRegister(char *arg1, char *arg2);
 
 const struct commandStruct commands[] ={
     {"clear", &CmdClear, "Clears the screen"},
     {"ls", &ListCommands, "Run Help Function"},
     {"help", &ListCommands, "Run Help Function"},
-    {"debug", &ToggelDebug, "Toggels Debug Mode"},
+	{"debug", &ToggelDebug, "Toggles Debug Mode"},
+	{"rr", &ReadRegister, "Reads a register"},
+	{"rw", &WriteRegister, "Writes a value to a register"},
     {"",0,""} //End of commands indicator. Must be last.
 };
+
+static void WriteRegister(char *arg1, char *arg2){
+	AT86RF212B_RegWrite(strtol(arg1, NULL, 16), strtol(arg2, NULL, 16));
+}
+
+static void ReadRegister(char *arg1, char *arg2){
+	AT86RF212B_RegRead(strtol(arg1, NULL, 16));
+}
 
 static void ToggelDebug(char *arg1, char *arg2){
     if(debug){
