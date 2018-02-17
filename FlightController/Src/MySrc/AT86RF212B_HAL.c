@@ -7,22 +7,22 @@
 
 #include "stm32f4xx_hal.h"
 
-#define SPI_NSS_PORT GPIOA
+#define SPI_NSS_PORT GPIOG
 #define SPI_NSS_PIN GPIO_PIN_15
 
-#define CLKM_PORT GPIOA
+#define CLKM_PORT GPIOG
 #define CLKM_PIN GPIO_PIN_14
 
-#define IRQ_PORT GPIOA
+#define IRQ_PORT GPIOG
 #define IRQ_PIN GPIO_PIN_13
 
-#define SLP_TR_PORT GPIOA
+#define SLP_TR_PORT GPIOG
 #define SLP_TR_PIN GPIO_PIN_12
 
-#define RST_PORT GPIOA
+#define RST_PORT GPIOG
 #define RST_PIN GPIO_PIN_11
 
-#define DIG2_PORT GPIOA
+#define DIG2_PORT GPIOG
 #define DIG2_PIN GPIO_PIN_10
 
 uint32_t timeout = 1000;
@@ -66,6 +66,7 @@ void AT86RF212B_WriteHAL(){
 void AT86RF212B_ReadAndWriteHAL(uint8_t * pTxData, uint8_t * pRxData, uint16_t size){
 	HAL_GPIO_WritePin(SPI_NSS_PORT, SPI_NSS_PIN, GPIO_PIN_RESET);
 	HAL_SPI_TransmitReceive(&hspi , pTxData, pRxData, size, timeout);
+	//TODO: This probably needs to be changed, could lock up here.
 	while(hspi.State == HAL_SPI_STATE_BUSY);
 	HAL_GPIO_WritePin(SPI_NSS_PORT, SPI_NSS_PIN, GPIO_PIN_SET);
 }
