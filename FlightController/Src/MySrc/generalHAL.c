@@ -7,17 +7,18 @@
 
 #include "stm32f4xx_hal.h"
 
-void GeneralHAL_Open(){
-	DWT->CYCCNT = 0;
-	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-}
-
 void Delayms(uint32_t timeMs){
 	HAL_Delay(timeMs);
 }
 
 void Delayus(uint32_t timeUs){
-	uint32_t stopTime = DWT->CYCCNT+timeUs*(HAL_RCC_GetHCLKFreq()/1000000);
+	//Clear the counter
+	DWT->CYCCNT = 0;
+	uint32_t stopTime = timeUs*(HAL_RCC_GetHCLKFreq()/1000000);
+	//Start the counter
+	DWT->CTRL |= 1;
 	while(DWT->CYCCNT < stopTime);
+	//Stop the counter
+	DWT->CTRL |= 0;
 	return;
 }

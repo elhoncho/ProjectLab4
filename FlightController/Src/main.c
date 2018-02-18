@@ -112,13 +112,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   AT86RF212B_Open();
-  GeneralHAL_Open();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int i = 0;
     while (1)
     {
     	terminalMain();
