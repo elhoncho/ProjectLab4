@@ -12,10 +12,11 @@
 #include<stdint.h>
 #include<string.h>
 #include<stdlib.h>
-#include "MyInc\terminal.h"
-#include "MyInc\terminalHAL.h"
-#include "MyInc\AT86RF212B.h"
-#include "MyInc\generalHAL.h"
+#include<stdio.h>
+#include "MyInc/terminal.h"
+#include "MyInc/terminalHAL.h"
+#include "MyInc/AT86RF212B.h"
+#include "MyInc/generalHAL.h"
 
 uint8_t volatile newCmd = 0;
 uint8_t debug = 0;

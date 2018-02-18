@@ -51,9 +51,9 @@
 #include "usb_device.h"
 
 /* USER CODE BEGIN Includes */
-#include "MyInc\terminal.h"
-#include "MyInc\AT86RF212B.h"
-#include "MyInc\generalHAL.h"
+#include "MyInc/terminal.h"
+#include "MyInc/AT86RF212B.h"
+#include "MyInc/generalHAL.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -112,7 +112,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   AT86RF212B_Open();
-  generalHAL_Open();
+  GeneralHAL_Open();
 
   /* USER CODE END 2 */
 
