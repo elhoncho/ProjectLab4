@@ -17,38 +17,56 @@
 #include "MyInc/terminalHAL.h"
 #include "MyInc/AT86RF212B.h"
 #include "MyInc/generalHAL.h"
+#include "MyInc/errors_and_logging.h"
 
+#include "MyInc/AT86RF212B_Regesters.h"
+#include "MyInc/AT86RF212B_Constants.h"
+
+#define MAX_STR_LEN 32
+
+//TODO:Globle variables!...probably need to find a better way to do this
 uint8_t volatile newCmd = 0;
 uint8_t debug = 0;
-typedef void(*functionPointerType)(char *arg1, char *arg2);
+
 struct commandStruct{
     const char *name;
     functionPointerType execute;
     const char *help;
 };
 
+//Prototypes for the command functions
 static void CmdClear(char *arg1, char *arg2);
 static void ListCommands(char *arg1, char *arg2);
 static void ToggelDebug(char *arg1, char *arg2);
 static void ReadRegister(char *arg1, char *arg2);
 static void WriteRegister(char *arg1, char *arg2);
+static void TestState(char *arg1, char *arg2);
 
-const struct commandStruct commands[] ={
+static const struct commandStruct commands[] ={
     {"clear", &CmdClear, "Clears the screen"},
     {"ls", &ListCommands, "Run Help Function"},
     {"help", &ListCommands, "Run Help Function"},
 	{"debug", &ToggelDebug, "Toggles Debug Mode"},
 	{"rr", &ReadRegister, "Reads a register"},
 	{"rw", &WriteRegister, "Writes a value to a register"},
+	{"ts", &TestState, "Tmp cmd to test the state"},
     {"",0,""} //End of commands indicator. Must be last.
 };
 
+static void TestState(char *arg1, char *arg2){
+	ASSERT(AT86RF212B_RegRead(RG_TRX_STATUS) & TRX_OFF);
+}
+
 static void WriteRegister(char *arg1, char *arg2){
-	AT86RF212B_RegWrite(strtol(arg1, NULL, 16), strtol(arg2, NULL, 16));
+	char tmpStr[MAX_STR_LEN];
+	sprintf(tmpStr, "0x%02X\r\n", AT86RF212B_RegWrite(strtol(arg1, NULL, 16), strtol(arg2, NULL, 16)));
+	TerminalWrite(tmpStr);
 }
 
 static void ReadRegister(char *arg1, char *arg2){
-	AT86RF212B_RegRead(strtol(arg1, NULL, 16));
+	char tmpStr[MAX_STR_LEN];
+	sprintf(tmpStr, "0x%02X\r\n", AT86RF212B_RegRead(strtol(arg1, NULL, 16)));
+	TerminalWrite(tmpStr);
 }
 
 static void ToggelDebug(char *arg1, char *arg2){
@@ -61,45 +79,45 @@ static void ToggelDebug(char *arg1, char *arg2){
 }
 
 static void ListCommands(char *arg1, char *arg2){
-    char tmpStr[40];
+    char tmpStr[MAX_STR_LEN];
     uint8_t i = 0;
     while(commands[i].execute){
         strcpy(tmpStr, commands[i].name);
-        terminalWrite(tmpStr);
+        TerminalWrite(tmpStr);
         strcpy(tmpStr, " - ");
-        terminalWrite(tmpStr);
+        TerminalWrite(tmpStr);
         strcpy(tmpStr, commands[i].help);
-        terminalWrite(tmpStr);
+        TerminalWrite(tmpStr);
         strcpy(tmpStr,"\r\n");
-        terminalWrite(tmpStr);
+        TerminalWrite(tmpStr);
         i++;
     }
 }
 static void CmdClear(char *arg1, char *arg2){
-    char tmpStr[25];
+    char tmpStr[MAX_STR_LEN];
     strcpy(tmpStr, "\033[2J\033[;H");
-    terminalWrite(tmpStr);
+    TerminalWrite(tmpStr);
 }
 
-void terminalOpen(){
-	//TODO: Get this to run when the termial is opened
-    char tmpStr[25];
+void TerminalOpen(){
+	//TODO: Get this to run when the terminal is opened
+    char tmpStr[MAX_STR_LEN];
     strcpy(tmpStr, "\033[2J\033[;H");
-    terminalWrite(tmpStr);
+    TerminalWrite(tmpStr);
     strcpy(tmpStr,"Battle Control Online:");
-    terminalWrite(tmpStr);
+    TerminalWrite(tmpStr);
     strcpy(tmpStr,"\r\n>");
-    terminalWrite(tmpStr);
+    TerminalWrite(tmpStr);
 }
 
-void termianlClose(){
+void TermianlClose(){
 
 }
 
-void terminalRead(){
+void TerminalRead(){
 	//TODO: Need to find a better way to control this than the newCmd switch
     if(newCmd){
-        char tmpStr[25];
+        char tmpStr[MAX_STR_LEN];
         static uint8_t i = 0;
         char tmpChar;
 
@@ -130,16 +148,16 @@ void terminalRead(){
 
         if(debug){
             strcpy(tmpStr, "\r\nArg0: \r\n");
-            terminalWrite(tmpStr);
-            terminalWrite(arg[0]);
+            TerminalWrite(tmpStr);
+            TerminalWrite(arg[0]);
 
             strcpy(tmpStr, "\r\nArg1: \r\n");
-            terminalWrite(tmpStr);
-            terminalWrite(arg[1]);
+            TerminalWrite(tmpStr);
+            TerminalWrite(arg[1]);
 
             strcpy(tmpStr, "\r\nArg2: \r\n");
-            terminalWrite(tmpStr);
-            terminalWrite(arg[2]);
+            TerminalWrite(tmpStr);
+            TerminalWrite(arg[2]);
         }
 
         i = 0;
@@ -147,11 +165,11 @@ void terminalRead(){
             while(commands[i].execute){
                 if(strcmp(arg[0], commands[i].name) == 0){
                     strcpy(tmpStr, "\r\n");
-                    terminalWrite(tmpStr);
+                    TerminalWrite(tmpStr);
 
                     commands[i].execute(arg[1], arg[2]);
                     strcpy(tmpStr, ">");
-                    terminalWrite(tmpStr);
+                    TerminalWrite(tmpStr);
                     i = 0;
                     break;
                 }
@@ -160,10 +178,10 @@ void terminalRead(){
             //i is set to 0 if a command is found
             if(i != 0){
                 strcpy(tmpStr, "\r\n");
-                terminalWrite(tmpStr);
+                TerminalWrite(tmpStr);
 
                 strcpy(tmpStr, "No Command Found \r\n>");
-                terminalWrite(tmpStr);
+                TerminalWrite(tmpStr);
             }
         }
 
@@ -171,10 +189,10 @@ void terminalRead(){
     }
 }
 
-void terminalWrite(char *txStr){
+void TerminalWrite(char *txStr){
 	terminalWriteHAL(txStr);
 }
 
-void terminalMain(){
-    terminalRead();
+void TerminalMain(){
+    TerminalRead();
 }
