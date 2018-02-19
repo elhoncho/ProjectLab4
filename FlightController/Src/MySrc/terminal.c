@@ -26,7 +26,7 @@
 
 //TODO:Globle variables!...probably need to find a better way to do this
 uint8_t volatile newCmd = 0;
-uint8_t debug = 0;
+extern uint8_t logging;
 
 struct commandStruct{
     const char *name;
@@ -40,21 +40,39 @@ static void ListCommands(char *arg1, char *arg2);
 static void ToggelDebug(char *arg1, char *arg2);
 static void ReadRegister(char *arg1, char *arg2);
 static void WriteRegister(char *arg1, char *arg2);
-static void TestState(char *arg1, char *arg2);
+static void PowerOnReset(char *arg1, char *arg2);
+static void GetIDs(char *arg1, char *arg2);
+static void Reset(char *arg1, char *arg2);
+static void TestSleep(char *arg1, char *arg2);
 
 static const struct commandStruct commands[] ={
     {"clear", &CmdClear, "Clears the screen"},
     {"ls", &ListCommands, "Run Help Function"},
     {"help", &ListCommands, "Run Help Function"},
-	{"debug", &ToggelDebug, "Toggles Debug Mode"},
+	{"logging", &ToggelDebug, "Toggles Logging Mode"},
 	{"rr", &ReadRegister, "Reads a register"},
 	{"rw", &WriteRegister, "Writes a value to a register"},
-	{"ts", &TestState, "Tmp cmd to test the state"},
+	{"po", &PowerOnReset, "Run a power on reset"},
+	{"id", &GetIDs, "get id's"},
+	{"reset", &Reset, "reset from active state"},
+	{"sleep", &TestSleep, "Test sleep state"},
     {"",0,""} //End of commands indicator. Must be last.
 };
 
-static void TestState(char *arg1, char *arg2){
-	ASSERT(AT86RF212B_RegRead(RG_TRX_STATUS) & TRX_OFF);
+static void TestSleep(char *arg1, char *arg2){
+	AT86RF212B_TestSleep();
+}
+
+static void Reset(char *arg1, char *arg2){
+	AT86RF212B_TRX_Reset();
+}
+
+static void PowerOnReset(char *arg1, char *arg2){
+	AT86RF212B_PowerOnReset();
+}
+
+static void GetIDs(char *arg1, char *arg2){
+	AT86RF212B_ID();
 }
 
 static void WriteRegister(char *arg1, char *arg2){
@@ -70,11 +88,11 @@ static void ReadRegister(char *arg1, char *arg2){
 }
 
 static void ToggelDebug(char *arg1, char *arg2){
-    if(debug){
-        debug = 0;
+    if(logging){
+        logging = 0;
     }
     else{
-        debug = 1;
+        logging = 1;
     }
 }
 
@@ -146,18 +164,18 @@ void TerminalRead(){
             tmpChar = terminalReadRXCharHAL();
         }
 
-        if(debug){
+        if(logging){
             strcpy(tmpStr, "\r\nArg0: \r\n");
-            TerminalWrite(tmpStr);
-            TerminalWrite(arg[0]);
+            LOG(LOG_LVL_INFO, tmpStr);
+            LOG(LOG_LVL_INFO, arg[0]);
 
             strcpy(tmpStr, "\r\nArg1: \r\n");
-            TerminalWrite(tmpStr);
-            TerminalWrite(arg[1]);
+            LOG(LOG_LVL_INFO, tmpStr);
+			LOG(LOG_LVL_INFO, arg[1]);
 
             strcpy(tmpStr, "\r\nArg2: \r\n");
-            TerminalWrite(tmpStr);
-            TerminalWrite(arg[2]);
+            LOG(LOG_LVL_INFO, tmpStr);
+			LOG(LOG_LVL_INFO, arg[2]);
         }
 
         i = 0;

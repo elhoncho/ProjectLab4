@@ -11,9 +11,9 @@
 #define ASSERT(condition) (condition ? 0 : AssertError(__FILE__, __LINE__))
 
 typedef enum{
-	LOG_DEBUG,
-	LOG_INFO,
-	LOG_ERROR
+	LOG_LVL_INFO,
+	LOG_LVL_DEBUG,
+	LOG_LVL_ERROR
 }LOG_LVL;
 
 void LOG(LOG_LVL lvl, char * message);

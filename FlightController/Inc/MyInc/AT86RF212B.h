@@ -13,6 +13,7 @@ typedef struct{
 	uint8_t version;
 	uint8_t manid0;
 	uint8_t manid1;
+	uint8_t phyMode;
 }AT86RF212B_Config;
 
 enum pin{
@@ -58,9 +59,27 @@ enum delayTimes{
   AT86RF212B_tMSNC
 };
 
+enum PhyMode{
+	AT86RF212B_BPSK_20,
+	AT86RF212B_BPSK_40,
+	AT86RF212B_O_QPSK_100,
+	AT86RF212B_O_QPSK_200,
+	AT86RF212B_O_QPSK_250,
+	AT86RF212B_O_QPSK_400,
+	AT86RF212B_O_QPSK_500,
+	AT86RF212B_O_QPSK_1000,
+};
+
 //------------Public Function Prototypes----------------//
 void AT86RF212B_Open();
 uint8_t AT86RF212B_RegRead(uint8_t reg);
 uint8_t AT86RF212B_RegWrite(uint8_t reg, uint8_t value);
+
+//TODO: Remove this it should be static
+void AT86RF212B_PowerOnReset();
+//TODO: Remove this it should be static
+void AT86RF212B_ID();
+//TODO: Remove this it should be static
+void AT86RF212B_TRX_Reset();
 
 #endif /* MYINC_AT86RF212B_H_ */

@@ -118,17 +118,17 @@
 #define 	TIMESTAMPING_DISABLE   0
 #define 	TIMESTAMPING_ENABLE   1
 #define 	TRAC_CHANNEL_ACCESS_FAILURE   3
-#define 	TRAC_CHANNEL_ACCESS_FAILURE   (3)
+//#define 	TRAC_CHANNEL_ACCESS_FAILURE   (3)
 #define 	TRAC_INVALID   7
-#define 	TRAC_INVALID   (7)
+//#define 	TRAC_INVALID   (7)
 #define 	TRAC_NO_ACK   5
-#define 	TRAC_NO_ACK   (5)
+//#define 	TRAC_NO_ACK   (5)
 #define 	TRAC_SUCCESS   0
-#define 	TRAC_SUCCESS   (0)
+//#define 	TRAC_SUCCESS   (0)
 #define 	TRAC_SUCCESS_DATA_PENDING   1
-#define 	TRAC_SUCCESS_DATA_PENDING   (1)
+//#define 	TRAC_SUCCESS_DATA_PENDING   (1)
 #define 	TRAC_SUCCESS_WAIT_FOR_ACK   2
-#define 	TRAC_SUCCESS_WAIT_FOR_ACK   (2)
+//#define 	TRAC_SUCCESS_WAIT_FOR_ACK   (2)
 #define 	TRX_AES_BLOCK_SIZE   (16)
 #define 	TRX_IRQ_AMI   (0x20)
 #define 	TRX_IRQ_AWAKE_END   (0x10)
@@ -147,5 +147,128 @@
 #define 	UPLD_RES_FT_DISABLE   0
 #define 	UPLD_RES_FT_ENABLE   1
 #define 	VERSION_NUM_AT86RF212   1
+
+#define 	SR_AACK_ACK_TIME   0x17, 0x04, 2
+#define 	SR_AACK_DIS_ACK   0x2e, 0x10, 4
+#define 	SR_AACK_FLTR_RES_FT   0x17, 0x20, 5
+#define 	SR_AACK_FVN_MODE   0x2e, 0xc0, 6
+#define 	SR_AACK_I_AM_COORD   0x2e, 0x08, 3
+#define 	SR_AACK_PROM_MODE   0x17, 0x02, 1
+#define 	SR_AACK_SET_PD   0x2e, 0x20, 5
+#define 	SR_AACK_UPLD_RES_FT   0x17, 0x10, 4
+#define 	SR_ANT_CTRL   0x0d, 0x03, 0
+#define 	SR_ANT_EXT_SW_EN   0x0d, 0x04, 2
+#define 	SR_ANT_SEL   0x0d, 0x80, 7
+#define 	SR_AVDD_OK   0x10, 0x40, 6
+#define 	SR_AVREG_EXT   0x10, 0x80, 7
+#define 	SR_BATMON_HR   0x11, 0x10, 4
+#define 	SR_BATMON_OK   0x11, 0x20, 5
+#define 	SR_BATMON_VTH   0x11, 0x0f, 0
+#define 	SR_BPSK_OQPSK   0x0c, 0x08, 3
+#define 	SR_CC_BAND   0x14, 0x07, 0
+#define 	SR_CC_NUMBER   0x13, 0xff, 0
+#define 	SR_CCA_DONE   0x01, 0x80, 7
+#define 	SR_CCA_ED_THRES   0x09, 0x0f, 0
+#define 	SR_CCA_MODE   0x08, 0x60, 5
+#define 	SR_CCA_REQUEST   0x08, 0x80, 7
+#define 	SR_CCA_STATUS   0x01, 0x40, 6
+#define 	SR_CHANNEL   0x08, 0x1f, 0
+#define 	SR_CLKM_CTRL   0x03, 0x07, 0
+#define 	SR_CLKM_SHA_SEL   0x03, 0x08, 3
+#define 	SR_CSMA_LBT_MODE   0x17, 0x40, 6
+#define 	SR_CSMA_SEED_0   0x2d, 0xff, 0
+#define 	SR_CSMA_SEED_1   0x2e, 0x07, 0
+#define 	SR_DVDD_OK   0x10, 0x04, 2
+#define 	SR_DVREG_EXT   0x10, 0x08, 3
+#define 	SR_ED_LEVEL   0x07, 0xff, 0
+#define 	SR_FTN_START   0x18, 0x80, 7
+#define 	SR_GC_PA   0x05, 0x60, 5
+#define 	SR_GC_TX_OFFS   0x16, 0x03, 0
+#define 	SR_IEEE_ADDR_0   0x24, 0xff, 0
+#define 	SR_IEEE_ADDR_1   0x25, 0xff, 0
+#define 	SR_IEEE_ADDR_2   0x26, 0xff, 0
+#define 	SR_IEEE_ADDR_3   0x27, 0xff, 0
+#define 	SR_IEEE_ADDR_4   0x28, 0xff, 0
+#define 	SR_IEEE_ADDR_5   0x29, 0xff, 0
+#define 	SR_IEEE_ADDR_6   0x2a, 0xff, 0
+#define 	SR_IEEE_ADDR_7   0x2b, 0xff, 0
+#define 	SR_IRQ_0_PLL_LOCK   0x0f, 0x01, 0
+#define 	SR_IRQ_1_PLL_UNLOCK   0x0f, 0x02, 1
+#define 	SR_IRQ_2_EXT_EN   0x04, 0x40, 6
+#define 	SR_IRQ_2_RX_START   0x0f, 0x04, 2
+#define 	SR_IRQ_3_TRX_END   0x0f, 0x08, 3
+#define 	SR_IRQ_4_CCA_ED_DONE   0x0f, 0x10, 4
+#define 	SR_IRQ_5_AMI   0x0f, 0x20, 5
+#define 	SR_IRQ_6_TRX_UR   0x0f, 0x40, 6
+#define 	SR_IRQ_7_BAT_LOW   0x0f, 0x80, 7
+#define 	SR_IRQ_MASK   0x0e, 0xff, 0
+#define 	SR_IRQ_MASK_MODE   0x04, 0x02, 1
+#define 	SR_IRQ_POLARITY   0x04, 0x01, 0
+#define 	SR_JCM_EN   0x0a, 0x20, 5
+#define 	SR_MAN_ID_0   0x1e, 0xff, 0
+#define 	SR_MAN_ID_1   0x1f, 0xff, 0
+#define 	SR_MAX_BE   0x2f, 0xf0, 4
+#define 	SR_MAX_CSMA_RETRIES   0x2c, 0x0e, 1
+#define 	SR_MAX_FRAME_RETRIES   0x2c, 0xf0, 4
+#define 	SR_MIN_BE   0x2f, 0x0f, 0
+#define 	SR_OQPSK_DATA_RATE   0x0c, 0x03, 0
+#define 	SR_OQPSK_SCRAM_EN   0x0c, 0x20, 5
+#define 	SR_OQPSK_SUB1_RC_EN   0x0c, 0x10, 4
+#define 	SR_PA_BOOST   0x05, 0x80, 7
+#define 	SR_PA_EXT_EN   0x04, 0x80, 7
+#define 	SR_PA_LT   0x16, 0xc0, 6
+#define 	SR_PAD_IO   0x03, 0xc0, 6
+#define 	SR_PAD_IO_CLKM   0x03, 0x30, 4
+#define 	SR_PAN_ID_0   0x22, 0xff, 0
+#define 	SR_PAN_ID_1   0x23, 0xff, 0
+#define 	SR_PART_NUM   0x1c, 0xff, 0
+#define 	SR_PDT_THRES   0x0a, 0x0f, 0
+#define 	SR_PLL_CF   0x1a, 0x1f, 0
+#define 	SR_PLL_CF_START   0x1a, 0x80, 7
+#define 	SR_PLL_DCU_START   0x1b, 0x80, 7
+#define 	SR_PLL_LOCK_CP   0x11, 0x80, 7
+#define 	SR_RESERVED_09_1   0x09, 0xf0, 4
+#define 	SR_RESERVED_0a_1   0x0a, 0xc0, 6
+#define 	SR_RESERVED_0a_3   0x0a, 0x10, 4
+#define 	SR_RESERVED_0d_2   0x0d, 0x78, 3
+#define 	SR_RESERVED_10_3   0x10, 0x30, 4
+#define 	SR_RESERVED_10_6   0x10, 0x03, 0
+#define 	SR_RESERVED_11_2   0x11, 0x40, 6
+#define 	SR_RESERVED_14_1   0x14, 0xf8, 3
+#define 	SR_RESERVED_15_2   0x15, 0x70, 4
+#define 	SR_RESERVED_16_2   0x16, 0x30, 4
+#define 	SR_RESERVED_16_3   0x16, 0x0c, 2
+#define 	SR_RESERVED_17_1   0x17, 0x80, 7
+#define 	SR_RESERVED_17_5   0x17, 0x08, 3
+#define 	SR_RESERVED_17_8   0x17, 0x01, 0
+#define 	SR_RESERVED_18_2   0x18, 0x7f, 0
+#define 	SR_RESERVED_19_2   0x19, 0x0c, 2
+#define 	SR_RESERVED_19_3   0x19, 0x03, 0
+#define 	SR_RESERVED_1a_2   0x1a, 0x40, 6
+#define 	SR_RESERVED_1a_3   0x1a, 0x20, 5
+#define 	SR_RESERVED_1b_2   0x1b, 0x7f, 0
+#define 	SR_RF_MC   0x19, 0xf0, 4
+#define 	SR_RND_VALUE   0x06, 0x60, 5
+#define 	SR_RSSI   0x06, 0x1f, 0
+#define 	SR_RX_BL_CTRL   0x04, 0x10, 4
+#define 	SR_RX_CRC_VALID   0x06, 0x80, 7
+#define 	SR_RX_PDT_DIS   0x15, 0x80, 7
+#define 	SR_RX_PDT_LEVEL   0x15, 0x0f, 0
+#define 	SR_RX_SAFE_MODE   0x0c, 0x80, 7
+#define 	SR_SFD_VALUE   0x0b, 0xff, 0
+#define 	SR_SHORT_ADDR_0   0x20, 0xff, 0
+#define 	SR_SHORT_ADDR_1   0x21, 0xff, 0
+#define 	SR_SLOTTED_OPERATION   0x2c, 0x01, 0
+#define 	SR_SPI_CMD_MODE   0x04, 0x0c, 2
+#define 	SR_SUB_MODE   0x0c, 0x04, 2
+#define 	SR_TRAC_STATUS   0x02, 0xe0, 5
+#define 	SR_TRX_CMD   0x02, 0x1f, 0
+#define 	SR_TRX_OFF_AVDD_EN   0x0c, 0x40, 6
+#define 	SR_TRX_STATUS   0x01, 0x1f, 0
+#define 	SR_TX_AUTO_CRC_ON   0x04, 0x20, 5
+#define 	SR_TX_PWR   0x05, 0x1f, 0
+#define 	SR_VERSION_NUM   0x1d, 0xff, 0
+#define 	SR_XTAL_MODE   0x12, 0xf0, 4
+#define 	SR_XTAL_TRIM   0x12, 0x0f, 0
 
 #endif /* MYINC_AT86RF212B_CONSTANTS_H_ */
