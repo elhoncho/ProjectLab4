@@ -121,7 +121,16 @@ void AT86RF212B_RegReadAndWriteHAL(uint8_t * pTxData, uint8_t * pRxData, uint16_
 	while(hspi.State == HAL_SPI_STATE_BUSY);
 	HAL_GPIO_WritePin(SPI_NSS_PORT, SPI_NSS_PIN, GPIO_PIN_SET);
 }
+uint32_t AT86RF212B_SysTickMsHAL(){
+	return HAL_GetTick();
+}
 
+//This function overrides the default callback for the STM32 HAL and its name should not be changed
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	if(GPIO_Pin == IRQ_PIN){
+		AT86RF212B_ISR_Callback();
+	}
+}
 void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 	switch(time){
 		case AT86RF212B_t7:
@@ -162,7 +171,9 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 		case AT86RF212B_tTR1:
 			//tTR1 	State transition from P_ON until CLKM is available
 			//    330 µs
-			Delayus(330);
+
+			//However the datasheet (7.1.4.1) says 420 µs typical and 1ms max
+			Delayms(1);
 			break;
 		case AT86RF212B_tTR2:
 			//tTR2 	State transition from SLEEP to TRX_OFF

@@ -9,11 +9,46 @@
 #define MYINC_AT86RF212B_H_
 
 typedef struct{
+	//What RF mode to operate in
+	uint8_t phyMode;
+
+	//ID vars
 	uint8_t partid;
 	uint8_t version;
 	uint8_t manid0;
 	uint8_t manid1;
-	uint8_t phyMode;
+
+	//RF mode vars
+	uint8_t useOQPSK;
+	uint8_t submode;
+	uint8_t OQPSK_Rate;
+	uint8_t scramen;
+	uint8_t rcen;
+	uint8_t gctxOffset;
+
+	//TX Power
+	uint8_t txPower;
+
+	//RX Sensitivity
+	uint8_t rxSensLvl;
+
+	//Enable crc
+	uint8_t txCrc;
+
+	//Address Filter
+	uint8_t panId_7_0;
+	uint8_t panId_15_8;
+	uint8_t shortAddr_7_0;
+	uint8_t shortAddr_15_8;
+	uint8_t extAddr_7_0;
+	uint8_t extAddr_15_8;
+	uint8_t extAddr_23_16;
+	uint8_t extAddr_31_24;
+	uint8_t extAddr_39_32;
+	uint8_t extAddr_47_40;
+	uint8_t extAddr_55_48;
+	uint8_t extAddr_63_56;
+
 }AT86RF212B_Config;
 
 enum pin{
@@ -74,9 +109,8 @@ enum PhyMode{
 void AT86RF212B_Open();
 uint8_t AT86RF212B_RegRead(uint8_t reg);
 uint8_t AT86RF212B_RegWrite(uint8_t reg, uint8_t value);
+void AT86RF212B_ISR_Callback();
 
-//TODO: Remove this it should be static
-void AT86RF212B_PowerOnReset();
 //TODO: Remove this it should be static
 void AT86RF212B_ID();
 //TODO: Remove this it should be static

@@ -40,7 +40,6 @@ static void ListCommands(char *arg1, char *arg2);
 static void ToggelDebug(char *arg1, char *arg2);
 static void ReadRegister(char *arg1, char *arg2);
 static void WriteRegister(char *arg1, char *arg2);
-static void PowerOnReset(char *arg1, char *arg2);
 static void GetIDs(char *arg1, char *arg2);
 static void Reset(char *arg1, char *arg2);
 static void TestSleep(char *arg1, char *arg2);
@@ -52,7 +51,6 @@ static const struct commandStruct commands[] ={
 	{"logging", &ToggelDebug, "Toggles Logging Mode"},
 	{"rr", &ReadRegister, "Reads a register"},
 	{"rw", &WriteRegister, "Writes a value to a register"},
-	{"po", &PowerOnReset, "Run a power on reset"},
 	{"id", &GetIDs, "get id's"},
 	{"reset", &Reset, "reset from active state"},
 	{"sleep", &TestSleep, "Test sleep state"},
@@ -65,10 +63,6 @@ static void TestSleep(char *arg1, char *arg2){
 
 static void Reset(char *arg1, char *arg2){
 	AT86RF212B_TRX_Reset();
-}
-
-static void PowerOnReset(char *arg1, char *arg2){
-	AT86RF212B_PowerOnReset();
 }
 
 static void GetIDs(char *arg1, char *arg2){
