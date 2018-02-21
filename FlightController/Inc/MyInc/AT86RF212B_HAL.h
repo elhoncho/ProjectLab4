@@ -18,6 +18,7 @@ uint8_t AT86RF212B_ReadPinHAL(uint8_t pin);
 void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config);
 uint32_t AT86RF212B_SysTickMsHAL();
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+void AT86RF212B_FrameWriteHAL(uint8_t * pTxData, uint16_t size);
 
 
 #endif /* MYINC_AT86RF212B_HAL_H_ */

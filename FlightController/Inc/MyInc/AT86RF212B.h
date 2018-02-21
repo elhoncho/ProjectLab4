@@ -9,6 +9,9 @@
 #define MYINC_AT86RF212B_H_
 
 typedef struct{
+	//Current State
+	uint8_t state;
+
 	//What RF mode to operate in
 	uint8_t phyMode;
 
@@ -115,5 +118,7 @@ void AT86RF212B_ISR_Callback();
 void AT86RF212B_ID();
 //TODO: Remove this it should be static
 void AT86RF212B_TRX_Reset();
+//TODO: Remove this it should be static
+void AT86RF212B_TxData(uint8_t * frame, uint8_t length);
 
 #endif /* MYINC_AT86RF212B_H_ */

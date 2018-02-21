@@ -9,7 +9,7 @@
 #define MYINC_GENERALHAL_H_
 
 void GeneralHAL_Open();
-void Delayms(uint32_t timeMs);
-void Delayus(uint32_t timeUs);
+void DelayMs(uint32_t timeMs);
+void DelayUs(uint32_t timeUs);
 
 #endif /* MYINC_GENERALHAL_H_ */

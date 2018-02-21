@@ -121,6 +121,20 @@ void AT86RF212B_RegReadAndWriteHAL(uint8_t * pTxData, uint8_t * pRxData, uint16_
 	while(hspi.State == HAL_SPI_STATE_BUSY);
 	HAL_GPIO_WritePin(SPI_NSS_PORT, SPI_NSS_PIN, GPIO_PIN_SET);
 }
+
+void AT86RF212B_FrameWriteHAL(uint8_t * pTxData, uint16_t size){
+	uint8_t pRxData[128];
+	HAL_GPIO_WritePin(SPI_NSS_PORT, SPI_NSS_PIN, GPIO_PIN_RESET);
+	//Transmit the Command
+	HAL_SPI_Transmit(&hspi , 0x20, 1, timeout);
+	//Transmit the PHR
+	HAL_SPI_Transmit(&hspi , &size, 1, timeout);
+	HAL_SPI_TransmitReceive(&hspi , pTxData, pRxData, size, timeout);
+	//TODO: This probably needs to be changed, could lock up here.
+	while(hspi.State == HAL_SPI_STATE_BUSY);
+	HAL_GPIO_WritePin(SPI_NSS_PORT, SPI_NSS_PIN, GPIO_PIN_SET);
+}
+
 uint32_t AT86RF212B_SysTickMsHAL(){
 	return HAL_GetTick();
 }
@@ -136,86 +150,86 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 		case AT86RF212B_t7:
 			//t7 	SLP_TR pulse width
 			//    62.5 ns
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_t8:
 			//t8 	SPI idle time: SEL rising to falling edge
 			//    250 ns
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_t8a:
 			//t8a 	SPI idle time: SEL rising to falling edge
 			//    500 ns
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_t9:
 			//t9 	SCLK rising edge LSB to /SEL rising edge
 			//    250 ns
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_t10:
 			//t10 	Reset pulse width
 			//    625 ns
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_t12:
 			//t12 	AES core cycle time
 			//    24 탎
-			Delayus(24);
+			DelayUs(24);
 			break;
 		case AT86RF212B_t13:
 			//t13 	Dynamic frame buffer protection: IRQ latency
 			//    750 ns
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tTR1:
 			//tTR1 	State transition from P_ON until CLKM is available
 			//    330 탎
 
 			//However the datasheet (7.1.4.1) says 420 탎 typical and 1ms max
-			Delayms(1);
+			DelayMs(1);
 			break;
 		case AT86RF212B_tTR2:
 			//tTR2 	State transition from SLEEP to TRX_OFF
 			//    380 탎
-			Delayus(380);
+			DelayUs(380);
 			break;
 		case AT86RF212B_tTR3:
 			//tTR3 	State transition from TRX_OFF to SLEEP
 			//    35 CLKM cycles
 
 			//TODO: Implement this better
-			Delayus(2);
+			DelayUs(2);
 			break;
 		case AT86RF212B_tTR4:
 			//tTR4 	State transition from TRX_OFF to PLL_ON
 			//    110 탎
-			Delayus(110);
+			DelayUs(110);
 			break;
 		case AT86RF212B_tTR5:
 			//tTR5 	State transition from PLL_ON to TRX_OFF
 			//    1 탎
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tTR6:
 			//tTR6 	State transition from TRX_OFF to RX_ON
 			//    110 탎
-			Delayus(110);
+			DelayUs(110);
 			break;
 		case AT86RF212B_tTR7:
 			//tTR7 	State transition from RX_ON to TRX_OFF
 			//    1 탎
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tTR8:
 			//tTR8 	State transition from PLL_ON to RX_ON
 			//    1 탎
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tTR9:
 			//tTR9 	State transition from RX_ON to PLL_ON
 			//    1 탎
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tTR10:
 			//tTR10 	State transition from PLL_ON to BUSY_TX
@@ -223,20 +237,20 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 
 			switch(config.phyMode){
 				case AT86RF212B_BPSK_20:
-					Delayus(50);
+					DelayUs(50);
 					break;
 				case AT86RF212B_BPSK_40:
-					Delayus(25);
+					DelayUs(25);
 					break;
 				case AT86RF212B_O_QPSK_100:
 				case AT86RF212B_O_QPSK_200:
 				case AT86RF212B_O_QPSK_400:
-					Delayus(40);
+					DelayUs(40);
 					break;
 				case AT86RF212B_O_QPSK_250:
 				case AT86RF212B_O_QPSK_500:
 				case AT86RF212B_O_QPSK_1000:
-					Delayus(16);
+					DelayUs(16);
 					break;
 				default:
 					ASSERT(0);
@@ -248,32 +262,32 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 		case AT86RF212B_tTR12:
 			//tTR12 	Transition from all states to TRX_OFF
 			//    1 탎
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tTR13:
 			//tTR13 	State transition from RESET to TRX_OFF
 			//    26 탎
-			Delayus(26);
+			DelayUs(26);
 			break;
 		case AT86RF212B_tTR14:
 			//tTR14 	Transition from various states to PLL_ON
 			//    1 탎
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tTR16:
 			//tTR16 	FTN calibration time
 			//    25 탎
-			Delayus(25);
+			DelayUs(25);
 			break;
 		case AT86RF212B_tTR20:
 			//tTR20 	PLL settling time on channel switch
 			//    11 탎
-			Delayus(11);
+			DelayUs(11);
 			break;
 		case AT86RF212B_tTR21:
 			//tTR21 	PLL CF calibration time
 			//    8 탎
-			Delayus(8);
+			DelayUs(8);
 			break;
 		case AT86RF212B_tTR25:
 			//tTR25 	RSSI update interval
@@ -283,10 +297,10 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 
 			switch(config.phyMode){
 				case AT86RF212B_BPSK_20:
-					Delayus(32);
+					DelayUs(32);
 					break;
 				case AT86RF212B_BPSK_40:
-					Delayus(24);
+					DelayUs(24);
 					break;
 				case AT86RF212B_O_QPSK_100:
 				case AT86RF212B_O_QPSK_200:
@@ -294,7 +308,7 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 				case AT86RF212B_O_QPSK_400:
 				case AT86RF212B_O_QPSK_500:
 				case AT86RF212B_O_QPSK_1000:
-					Delayus(8);
+					DelayUs(8);
 					break;
 				default:
 					ASSERT(0);
@@ -310,35 +324,35 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 			switch(config.phyMode){
 				case AT86RF212B_BPSK_20:
 					//    8 symbol
-					Delayus(400);
+					DelayUs(400);
 					break;
 				case AT86RF212B_BPSK_40:
 					//    8 symbol
-					Delayus(200);
+					DelayUs(200);
 					break;
 				case AT86RF212B_O_QPSK_100:
 					//    8 symbol
-					Delayus(320);
+					DelayUs(320);
 					break;
 				case AT86RF212B_O_QPSK_200:
 					//    2 symbol
-					Delayus(80);
+					DelayUs(80);
 					break;
 				case AT86RF212B_O_QPSK_250:
 					//    8 symbol
-					Delayus(128);
+					DelayUs(128);
 					break;
 				case AT86RF212B_O_QPSK_400:
 					//    2 symbol
-					Delayus(80);
+					DelayUs(80);
 					break;
 				case AT86RF212B_O_QPSK_500:
 					//    2 symbol
-					Delayus(32);
+					DelayUs(32);
 					break;
 				case AT86RF212B_O_QPSK_1000:
 					//    2 symbol
-					Delayus(32);
+					DelayUs(32);
 					break;
 				default:
 					ASSERT(0);
@@ -351,20 +365,20 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 			//    8 symbol
 			switch(config.phyMode){
 				case AT86RF212B_BPSK_20:
-					Delayus(400);
+					DelayUs(400);
 					break;
 				case AT86RF212B_BPSK_40:
-					Delayus(200);
+					DelayUs(200);
 					break;
 				case AT86RF212B_O_QPSK_100:
 				case AT86RF212B_O_QPSK_200:
 				case AT86RF212B_O_QPSK_400:
-					Delayus(320);
+					DelayUs(320);
 					break;
 				case AT86RF212B_O_QPSK_250:
 				case AT86RF212B_O_QPSK_500:
 				case AT86RF212B_O_QPSK_1000:
-					Delayus(128);
+					DelayUs(128);
 					break;
 				default:
 					ASSERT(0);
@@ -375,27 +389,27 @@ void AT86RF212B_DelayHAL(uint8_t time, AT86RF212B_Config config){
 		case AT86RF212B_tTR29:
 			//tTR29 	SR_RND_VALUE update time
 			//    1 탎
-			Delayus(1);
+			DelayUs(1);
 			break;
 		case AT86RF212B_tMSNC:
 			//tMSNC 	Minimum time to synchronize to a preamble and receive an SFD
 			//    2 symbol
 			switch(config.phyMode){
 				case AT86RF212B_BPSK_20:
-					Delayus(100);
+					DelayUs(100);
 					break;
 				case AT86RF212B_BPSK_40:
-					Delayus(400);
+					DelayUs(400);
 					break;
 				case AT86RF212B_O_QPSK_100:
 				case AT86RF212B_O_QPSK_200:
 				case AT86RF212B_O_QPSK_400:
-					Delayus(80);
+					DelayUs(80);
 					break;
 				case AT86RF212B_O_QPSK_250:
 				case AT86RF212B_O_QPSK_500:
 				case AT86RF212B_O_QPSK_1000:
-					Delayus(32);
+					DelayUs(32);
 					break;
 				default:
 					ASSERT(0);
