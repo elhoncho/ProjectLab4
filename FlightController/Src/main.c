@@ -51,9 +51,9 @@
 #include "usb_device.h"
 
 /* USER CODE BEGIN Includes */
-#include "MyInc/terminal.h"
-#include "MyInc/AT86RF212B.h"
-#include "MyInc/generalHAL.h"
+#include "terminal.h"
+#include "AT86RF212B.h"
+#include "generalHAL.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
