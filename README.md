@@ -33,7 +33,7 @@
 
 7.Clone Repo
 
-    git clone https://github.com/elhoncho/ProjectLab4.git
+    git clone --recurse-submodules https://github.com/elhoncho/ProjectLab4.git
 
 8.In eclipse file->open new project from file system
 
@@ -42,3 +42,7 @@
 10.Debug button -> debug configuration
 
     select Ac6 STM32
+    
+11. Add AT86RF212B/Inc to the includes path in Eclipse
+
+12. Add AT85RF212B/Src to the sources path in Eclipse
