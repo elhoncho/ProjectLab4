@@ -53,12 +53,16 @@
 /* USER CODE BEGIN Includes */
 #include "terminal.h"
 #include "AT86RF212B.h"
+#include "AT86RF212B_HAL.h"
 #include "generalHAL.h"
+#include "RawMode.h"
+
+#define MODE_RAW 0
+#define MODE_TERMINAL 1
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi3;
-
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
@@ -112,14 +116,23 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   AT86RF212B_Open();
-
+  uint8_t AT86RF212B_Mode = MODE_RAW;
+  RawModeOpen();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1)
     {
-    	TerminalMain();
+    	switch(AT86RF212B_Mode){
+    	case MODE_RAW:
+    		RawModeMain();
+    		break;
+    	case MODE_TERMINAL:
+    		TerminalMain();
+    		break;
+    	}
+
     	AT86RF212B_Main();
   /* USER CODE END WHILE */
 
