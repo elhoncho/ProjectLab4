@@ -341,6 +341,9 @@ uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len)
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
+void CDC_Enable_USB_Packet(){
+	USBD_CDC_ReceivePacket(&hUsbDeviceHS);
+}
 /**
   * @}
   */
