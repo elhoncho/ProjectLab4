@@ -48,10 +48,13 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include <interfaceHAL.h>
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
+#include <interfaceHAL.h>
+#include <errors_and_logging.h>
+#include <RawMode.h>
+#include <AT86RF212B.h>
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,7 +63,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+extern uint8_t logging;
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -294,10 +297,21 @@ static int8_t CDC_Control_HS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_HS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 11 */
-  USBD_CDC_SetRxBuffer(&hUsbDeviceHS, &Buf[0]);
-  USBD_CDC_ReceivePacket(&hUsbDeviceHS);
+  uint8_t bufferStatus;
   for(uint32_t i = 0; i < *Len; i++){
-	  InterfacePushToInputBufferHAL(Buf[i]);
+	  bufferStatus = InterfacePushToInputBufferHAL(Buf[i]);
+	  if(bufferStatus == 0){
+		  //Failed to push to buffer
+		  ASSERT(0);
+		  if(logging){
+			  LOG(LOG_LVL_ERROR, "Error pushing to buffer from USB\r\n");
+		  }
+		  break;
+	  }
+	  else if(bufferStatus == 2){
+		  //Buffer is filling up, send what is on the buffer
+		  //RawModeMain();
+	  }
   }
   return (USBD_OK);
   /* USER CODE END 11 */
@@ -325,7 +339,6 @@ uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
-
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
 /**
