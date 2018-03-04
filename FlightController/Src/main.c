@@ -63,7 +63,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi3;
-
+uint8_t AT86RF212B_Mode = MODE_TERMINAL;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
@@ -117,8 +117,16 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   AT86RF212B_Open();
-  uint8_t AT86RF212B_Mode = MODE_RAW;
-  RawModeOpen();
+
+
+  switch(AT86RF212B_Mode){
+	case MODE_RAW:
+		RawModeOpen();
+		break;
+	case MODE_TERMINAL:
+		TerminalOpen();
+		break;
+	}
   /* USER CODE END 2 */
 
   /* Infinite loop */
