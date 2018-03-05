@@ -57,8 +57,9 @@
 #include "generalHAL.h"
 #include "RawMode.h"
 
-#define MODE_RAW 0
-#define MODE_TERMINAL 1
+#define MODE_RAW_TX 0
+#define MODE_RAW_RX 1
+#define MODE_TERMINAL 2
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -118,9 +119,11 @@ int main(void)
 
   AT86RF212B_Open();
 
-
   switch(AT86RF212B_Mode){
-	case MODE_RAW:
+	case MODE_RAW_TX:
+		RawModeOpen();
+		break;
+	case MODE_RAW_RX:
 		RawModeOpen();
 		break;
 	case MODE_TERMINAL:
@@ -134,9 +137,11 @@ int main(void)
     while (1)
     {
     	switch(AT86RF212B_Mode){
-    	case MODE_RAW:
+    	case MODE_RAW_TX:
     		RawModeMain();
     		break;
+    	case MODE_RAW_RX:
+			break;
     	case MODE_TERMINAL:
     		TerminalMain();
     		break;
