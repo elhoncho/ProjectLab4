@@ -64,7 +64,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi3;
-uint8_t AT86RF212B_Mode = MODE_TERMINAL;
+uint8_t AT86RF212B_Mode = MODE_RAW_TX;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
