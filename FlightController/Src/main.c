@@ -51,15 +51,8 @@
 #include "usb_device.h"
 
 /* USER CODE BEGIN Includes */
-#include "terminal.h"
-#include "AT86RF212B.h"
-#include "AT86RF212B_HAL.h"
-#include "generalHAL.h"
-#include "RawMode.h"
+#include "MainController.h"
 
-#define MODE_RAW_TX 0
-#define MODE_RAW_RX 1
-#define MODE_TERMINAL 2
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -100,8 +93,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -116,38 +107,14 @@ int main(void)
   MX_USB_DEVICE_Init();
   MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
-
-  AT86RF212B_Open();
-
-  switch(AT86RF212B_Mode){
-	case MODE_RAW_TX:
-		RawModeOpen();
-		break;
-	case MODE_RAW_RX:
-		RawModeOpen();
-		break;
-	case MODE_TERMINAL:
-		TerminalOpen();
-		break;
-	}
+  MainControllerOpen();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1)
     {
-    	switch(AT86RF212B_Mode){
-    	case MODE_RAW_TX:
-    		RawModeMain();
-    		break;
-    	case MODE_RAW_RX:
-			break;
-    	case MODE_TERMINAL:
-    		TerminalMain();
-    		break;
-    	}
-
-    	AT86RF212B_Main();
+    	MainControllerLoop();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
