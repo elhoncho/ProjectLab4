@@ -68,6 +68,8 @@
 
 /* USER CODE BEGIN Private defines */
 uint8_t AT86RF212B_Mode;
+
+int main(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
