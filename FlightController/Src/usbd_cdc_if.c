@@ -261,8 +261,17 @@ static int8_t CDC_Control_HS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
     break;
 
   case CDC_GET_LINE_CODING:
-
+  {
+	uint32_t baudrate = 9600;
+	pbuf[0] = (uint8_t)(baudrate);
+	pbuf[1] = (uint8_t)(baudrate >> 8);
+	pbuf[2] = (uint8_t)(baudrate >> 16);
+	pbuf[3] = (uint8_t)(baudrate >> 24);
+	pbuf[4] = 0;
+	pbuf[5] = 0;
+	pbuf[6] = 8;
     break;
+  }
 
   case CDC_SET_CONTROL_LINE_STATE:
 
