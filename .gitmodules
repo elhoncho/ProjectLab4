@@ -1,3 +1,6 @@
 [submodule "FlightController/AT86RF212B"]
 	path = FlightController/AT86RF212B
 	url = https://github.com/elhoncho/AT86RF212B
+[submodule "DroneApp"]
+	path = DroneApp
+	url = https://github.com/elhoncho/DroneApp.git
