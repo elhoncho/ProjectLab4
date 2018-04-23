@@ -96,8 +96,8 @@ extern uint8_t logging;
 /* USER CODE BEGIN PRIVATE_DEFINES */
 /* Define size for the receive and transmit buffer over CDC */
 /* It's up to user to redefine and/or remove those define */
-#define APP_RX_DATA_SIZE  2048
-#define APP_TX_DATA_SIZE  2048
+#define APP_RX_DATA_SIZE  128
+#define APP_TX_DATA_SIZE  128
 /* USER CODE END PRIVATE_DEFINES */
 
 /**
@@ -310,18 +310,6 @@ static int8_t CDC_Receive_HS(uint8_t* Buf, uint32_t *Len)
   uint8_t bufferStatus;
   for(uint32_t i = 0; i < *Len; i++){
 	  bufferStatus = InterfacePushToInputBufferHAL(Buf[i]);
-	  if(bufferStatus == 0){
-		  //Failed to push to buffer
-		  ASSERT(0);
-		  if(logging){
-			  LOG(LOG_LVL_ERROR, "Error pushing to buffer from USB\r\n");
-		  }
-		  break;
-	  }
-	  else if(bufferStatus == 2){
-		  //Buffer is filling up, send what is on the buffer
-		  //RawModeMain();
-	  }
   }
   return (USBD_OK);
   /* USER CODE END 11 */
