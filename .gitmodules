@@ -4,3 +4,6 @@
 [submodule "STM32Drone"]
 	path = STM32Drone
 	url = https://github.com/elhoncho/STM32Drone.git
+[submodule "RaspberryPiDrone"]
+	path = RaspberryPiDrone
+	url = https://github.com/elhoncho/RaspberryPiDrone.git
