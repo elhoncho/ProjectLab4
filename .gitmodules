@@ -1,3 +1,6 @@
 [submodule "DroneApp"]
 	path = DroneApp
 	url = https://github.com/elhoncho/DroneApp.git
+[submodule "STM32Drone"]
+	path = STM32Drone
+	url = https://github.com/elhoncho/STM32Drone.git
