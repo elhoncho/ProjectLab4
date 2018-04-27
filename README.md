@@ -1,6 +1,7 @@
 # ProjectLab4
 Clone the Repo (Need to do it recursivly to pull all of the submodules)
-git clone --recursive https://github.com/elhoncho/ProjectLab4.git
+    git clone --recursive https://github.com/elhoncho/ProjectLab4.git
+
 1.Setup Instructions to run Flight Controller
 
     This code was developed using OpenSTM32 and CubeMX
